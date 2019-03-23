@@ -1,6 +1,6 @@
 Twecoll is a Twitter command-line tool written in Python. It can be used to retrieve data from Twitter and purge likes (its only data-altering feature). It is based on a sub-command principle meaning calls to twecoll are based on a keyword which instructs twecoll what to do. Below is a list of examples followed by a brief explanation of each command. Running twecoll requires Python 2.7 and the argparse library. It was tested with igraph 0.6 and 0.7.1. The igraph library is optional and is used to generate a clustered graph of the network.
 
-Note: I am not planning to maintain this further. If you don't care about the likes, have a look at [nucoll](https://github.com/jdevoo/nucoll) which provides similar functionality.
+Note: I am planning to maintain this further. If you don't care about the likes, have a look at [nucoll](https://github.com/jdevoo/nucoll) which provides similar functionality.
 
 ## Contributors
 
@@ -28,14 +28,14 @@ The first time you run a twecoll command, it will ask you for the consumer key a
 Historically, this was twecoll's main use: download all favorited/liked tweets in a file for search purposes. Let's take the handle 'jdevoo' as an example.
 
 ```
-$ twecoll likes jdevoo
+$ twecoll_v3 likes jdevoo
 ```
 
 This will produce a jdevoo.fav file containing all likes including a tweet ID, timestamp, user ID, handle, text (urf-8).
 In order to purge the likes, twecoll needs the .fav file. You can the execute:
 
 ```
-$ twecoll likes -p jdevoo
+$ twecoll_v3 likes -p jdevoo
 ```
 
 This is the only command that alters account data. You will need to select the Read+Write permission model for this to work when registering twecoll.
@@ -44,14 +44,14 @@ This is the only command that alters account data. You will need to select the R
 Twecoll can download up to 3000 tweets for a handle or run search queries.
 
 ```
-$ twecoll tweets jdevoo
+$ twecoll_v3 tweets jdevoo
 ```
 
 This would generate a jdevoo.twt file containing all tweets including timestamp and text (utf-8).
 In order search for tweets related to a certain hashtag or run a more advanced query, use the -q switch and double-quotes around the query string:
 
 ```
-$ twecoll tweets -q "#dg2g"
+$ twecoll_v3 tweets -q "#dg2g"
 ```
 
 This will also generate a .twt file name with the url-encoded search string.
@@ -62,19 +62,19 @@ It is possible to generate a GML file of your first and second degree relationsh
 First retrieve the handle details
 
 ```
-$ twecoll init jdevoo
+$ twecoll_v3 init jdevoo
 ```
 
 This generates a jdevoo.dat file. It also populates an img directory with avatar images. It is also possible to initialize from a .twt file using the -q option. In this example, retrieve friends of each entry in the .dat file.
 
 ```
-$ twecoll fetch jdevoo
+$ twecoll_v3 fetch jdevoo
 ```
 
 This populates the fdat directory. You can now generate the graph file using the defaults.
 
 ```
-$ twecoll edgelist jdevoo
+$ twecoll_v3 edgelist jdevoo
 ```
 
 This generates a jdevoo.gml file in Graph Model Language. If you have installed the python version of igraph, a .png file will also be generated with a visualization of the GML data. You can also use other packages to visualize your GML file, e.g. Gephi.
@@ -87,8 +87,8 @@ See also the [wiki](https://github.com/jdevoo/twecoll/wiki) section for more ide
 Twecoll has built-in help, version and API status switches invoked with -h, -v and -s respectively. Each command can also be invoked with the help switch for additional information about its sub-options.
 
 ```
-$ twecoll -h
-usage: twecoll [-h] [-v] [-s]
+$ twecoll_v3 -h
+usage: twecoll_v3 [-h] [-v] [-s]
                {resolve,init,fetch,tweets,likes,edgelist} ...
 
 Twitter Collection Tool
@@ -136,3 +136,5 @@ sub-commands:
 	- Improved init
 * Version 1.13
 	- Added option to skip mentions from queries in init
+* Version v3
+	- Tweet returned has more nformation about the user retweeted.
